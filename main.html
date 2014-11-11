@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+
+<style>
+*{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+html,body,header,section,strong,em,a,p,div,footer{padding: 0;margin: 0;line-height: 100%;font-family: 微软雅黑;}
+a{text-decoration: none;}
+body {background-color: #fff;-webkit-text-size-adjust:none;	-webkit-user-select:none;-webkit-touch-callout:none;}
+html,body {
+	height:100%;
+}
+/*按钮*/
+.button{display: inline-block;position: relative;box-shadow: 0 3px 0 #b00a0a;background-color: #e40c0c;padding: 1px 0 8px 0;border-radius: 20px;font-size: 20px;text-decoration: none;color: #fff;font-weight: bolder;margin: 2px auto;	text-shadow: 1px 1px 1px #b00a0a;}
+.button:after{content: "";position: absolute;border-radius: inherit;width: 100%;height: 100%;background-color: rgba(250, 122, 122, 0.73);left: 0;top: -4px;}
+.button .font{position: relative;z-index: 1;}
+.button:before{content: "";position: absolute;color: #fff;left: 8px;top: 0px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAFCAYAAAAkG+5xAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALtJREFUeNq80D0OAUEYxvHdREWpICHBVgoahU6l2QPQuYneHRzAIegUaoWChkgkEiIK340d/4lHss1mFeJNfpnsztczr2uMcb6oNMrwUEIeORQ0l43Z30UPFcxC/+eJiA0ZVNFADUVdnIpY/8RZHrjBvuyKI0Zad8EQSX0v3FAH7IuaaKGuEJ8KsJIl9tjJAadQgHsoQBDXWhvAZ+zAVzsdHTDFGBOssdEFvy0C9M27thigDc925h9eAgwAJGWSCm8/rysAAAAASUVORK5CYII=);width: 32px;height: 5px;z-index: 2;}
+.blue {text-shadow: 1px 1px 1px #0a47bd;box-shadow: 0 3px 0 #0a47bd;background-color: #276cf0;}
+.blue:after{background-color: rgba(154, 158, 250, 0.73);}
+.p_btn {text-align: center;margin: 7% 0;}
+.p_btn .button {width: 70%;}
+/*加载中*/
+.loading {position: absolute;width: 100%;height: 100%;}
+.loading p{text-align: center;position: absolute;width:100%;margin-top: -40px;top: 50%;font-size: 12px;font-weight: bold;}
+.loading img {margin: 0 10px;width: 50%;margin: 10px;}
+/*游戏首页*/
+.main {position:absolute;width:100%;overflow-x: hidden;box-sizing: border-box;}
+.main header img{width: 100%;}
+.main .btn {position: relative;margin: 12% 0;}
+.main .carRoom {background: url(images/carBg.png) repeat-x;text-align: center;padding: 16% 0;height: auto;margin: 0;}
+.main footer {font-size: 12px;color: #fff;background-color: #931a06;position: relative;font-weight: bolder;padding: 10px 0 10px 60px; white-space: nowrap;bottom: 0;}
+.main footer img{position: absolute;bottom: 0;left: 0;margin: 0 0 8px 8px;}
+/*弹出层*/
+.message {position: absolute;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);top: 0;left: 0;z-index: 3;}
+.message .main{width: 90%;margin: 15% auto 0;position: relative;}
+.message .title {background-color: #2b7dec;font-size: 20px;text-align: center;line-height: 55px;height: 55px;font-weight: bold;color:#fff;position: relative;}
+.message .close {height: 28px;width: 28px;position: absolute;right: 0;top: 0;border: 3px solid #fff;border-radius: 20px;margin: 11px;}
+.message .close:before,.message .close:after {content: "";position: absolute;width: 4px;height: 20px;background: #fff;-webkit-transform: rotate(45deg);left: 12px;top: 4px;}
+.message .close:after{-webkit-transform: rotate(-45deg);}
+.message .content {padding: 8% 8% 4%;border-radius: 25px;border-top-right-radius:0;border-top-left-radius:0;background-color: #fff;font-size:14px;}
+.message .content em{color: #2b7dec;font-style: normal;}
+.message .content em.centerEm{display: block;text-align: center;}
+.message .content strong{font-size: 30px;}
+.message .content img {display: block;width: 50%;margin: 10% auto;}
+/*奖品详情*/
+.prizeDetail {position:absolute;width: 100%;height: 100%;background: #429732;overflow-x: hidden;min-height: 600px;}
+.prizeDetail header {position: absolute;z-index: 2;width: 100%;}	
+.prizeDetail header img{width: 100%;}
+.prizeDetail section {width: 88%; margin: 0 auto; background: url(images/borderBg.png);left: 6%;}
+.prizeDetail .contentBg {background-color: #4a4a51;box-sizing: border-box; margin: 0 auto; width: 94%;left: 3%;height: 100%;padding-top: 40%;}
+.prizeDetail strong {display: block;color: #1251a8;width: 35%;padding:8px 0 8px 8px;background-color: #fff;border-radius: 25px;border-bottom-left-radius:0;border-top-left-radius:0;max-width: 100px;}
+.prizeDetail p {color: #fff;margin: 10px 0 25px;white-space: normal;word-break: break-all;padding: 0 4%;}
+.prizeDetail .p_code {-webkit-user-select:text;}
+.prizeDetail .p_copy {text-align: center;}
+.prizeDetail .p_copy a {background-color: #2b7dec;padding: 8px 45px;border-radius: 25px;color: #fff;}
+.prizeDetail ol {list-style: inside;padding: 10px 0;list-style-type: lower-hexadecimal;font-size: 14px;color: #cfd4d8;}
+.prizeDetail ol li{padding: 5px 10px;}
+.prizeDetail ol li img {width: 80%;margin: 5% 10%;}
+.prizeDetail ol li:last-child{list-style-type: none;}
+.prizeDetail .declare {font-size: 12px;margin-top: 20%;}
+
+	.game {
+		width:100%;
+		height:100%;
+	}
+</style>
+</head>
+<body>
+<!--loading-->
+<div class="loading">
+	<p>
+		正在获取路况信息...<br/>
+		<img src="images/carBoy.gif"/>
+	</p>	
+</div>
+<!--游戏首页-->
+<div class="main" style="display:none;">
+	<header><img src="images/mainTitle.png"/></header>
+	<section class="btn">
+		<p class="p_btn"><a id="btnStartGame" href="javascript:void(0);" class="button" ><span class="font">开始游戏<span></a></p>
+		<p class="p_btn"><a href="javascript:void(0);" _t="gameRule" class="button blue"><span class="font">游戏指南<span></a></p>
+		<p class="p_btn"><a href="javascript:void(0);" class="button blue"><span class="font">领奖中心<span></a></p>
+	</section>
+	<section class="carRoom">
+		<img src="images/carBoy.png"/>
+	</section>
+	<footer><img src="images/code.png"/>官方微信：mapbarnavi&nbsp;|&nbsp;扫一扫，赢惊喜！</footer>
+</div>
+<!--游戏指南-->
+<div class="message" id="gameRule" style="display:none;">
+	<div class="main">
+		<div class="title"><a href="javascript:void(0);" _p="gameRule" class="close"></a>游戏指南</div>
+		<div class="content">
+			<p>
+				游戏中总共四个操作：<br/>
+				<em>油门、刹车、左转、右转</em>
+				<br/><br/>
+				遇到哪种指示牌，您点击相应的图标，就可以得分！每次10分。看起来很简单的样子，可真的如此吗？一定不要点错哦！
+				<br/><br/>
+				得到20分即可参与小米4抽奖，快来试试吧！
+			</p>
+			<p class="p_btn"><a href="javascript:void(0);" class="button" _p="gameRule"><span class="font" >立即开始<span></a></p>
+		</div>
+	</div>
+</div>
+<!--游戏结束：失败-->
+<div class="message" id="gameOver_failure" style="display:none;">
+	<div class="main">
+		<div class="title"><a href="javascript:void(0);" _p="gameOver_failure" class="close"></a></a>游戏结束</div>
+		<div class="content">
+			<p>
+				<em class="centerEm">最终得分：<strong>100分</strong></em>
+				<br/>
+				真遗憾，就差一点就告别马路杀手称号了！加油再试一次。
+			</p>
+			<p class="p_btn"><a href="javascript:void(0);" class="button" _p="gameOver_failure"><span class="font">再玩一次<span></a></p>
+		</div>
+	</div>
+</div>
+<!--游戏结束：成功-->
+<div class="message" id="gameOver_success" style="display:none;">
+	<div class="main">
+		<div class="title"><a href="javascript:void(0);" _p="gameOver_success" class="close"></a></a>游戏结束</div>
+		<div class="content">
+			<p>
+				<em class="centerEm">最终得分：<strong>200分</strong></em>
+				<br/>
+				恭喜你通过马路杀手测试成为驾驶达人。小米4垂手可得，赶快点击抽奖按钮，即刻抽取！
+			</p>
+			<p class="p_btn"><a href="javascript:void(0);" class="button" _p="gameOver_success"><span class="font">抽奖<span></a></p>
+			<p class="p_btn"><a href="javascript:void(0);" class="button" _p="gameOver_success"><span class="font">再玩一次<span></a></p>
+		</div>
+	</div>
+</div>
+<!--抽奖中-->
+<div class="message" id="prizeStart" style="display:none;">
+	<div class="main">
+		<div class="title">抽奖中</div>
+		<div class="content">
+			<img src="images/dice.gif"/>
+		</div>
+	</div>
+</div>
+<!--抽奖结束-->
+<div class="message" id="prizeOver" style="display:none;">
+	<div class="main">
+		<div class="title"><a href="javascript:void(0);" _p="prizeOver" class="close"></a></a>抽奖结束</div>
+		<div class="content">
+			<p>
+				很遗憾你没能获得小米4，获得<em>图吧导航VIP大礼包</em>。
+				<br/>
+			</p>
+			<p class="p_btn"><a href="javascript:void(0);" class="button" _p="prizeOver"><span class="font">领奖<span></a></p>
+		</div>
+	</div>
+</div>
+<!--奖品详情-->
+<div class="prizeDetail" style="display:none;" id="prizeDetail">
+	<header><img src="images/prizeTitle.png"/></header>
+	<section>
+		<div class="contentBg">
+			<strong>兑换码</strong>
+			<p class="p_code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+			<p class="p_copy"><a href="javascript:void(0);">复制代码</a></p>
+			<strong>使用方法</strong>
+			<ol>
+				<li>复制上面的兑换码（长按兑换码复制更靠谱哦）</li>
+				<li>打开图吧导航</li>
+				<li>进入“数据”-“数据助手”<br/><img src="images/step1.png"/></li>
+				<li>将兑换码粘贴到激活码空白栏<br/><img src="images/step2.png"></li>
+				<li>点击“激活”<br/><img src="images/step3.png"/></li>
+				<li>大功告成！您已经成为图吧导航VIP用户啦，尊享最及时最靠谱的电子眼！</li>
+			</ol>
+			<p class="declare">*&nbsp;本次活动最终解释权归&nbsp;图吧科技&nbsp;所有。</p>
+		</div>		
+	</section>
+</div>
+<div class="game" style="display:none;">
+	<canvas id="gameCanvas" width="640" height="940"></canvas>
+</div>
+<div style="display:none;"><img src="res/accelerator_n.png" /><img src="res/accelerator_s.png" /><img src="res/brake_n.png" /><img src="res/brake_s.png" /><img src="res/car.png" /><img src="res/light_left.png" /><img src="res/light_right.png" /><img src="res/light_run.png" /><img src="res/light_stop.png" /><img src="res/PlayBG.png" /><img src="res/scoreBG.png" /><img src="res/timeBG.png" /><img src="res/tip_right.png" /><img src="res/tip_wrong.png" /><img src="res/turn_left_n.png" /><img src="res/turn_left_s.png" /><img src="res/turn_right_n.png" /><img src="res/turn_right_s.png" /></div>
+<script src="js/cocos2d-js-v3.1-lite.js"></script>
+<script src="js/game.js"></script>
+<script type="text/javascript">
+	(function () {
+		function openMessage () {
+			var _p = this.getAttribute('_p'),
+					_t = this.getAttribute('_t');
+			if(_p) {
+				document.querySelector('#' + _p).style.display = 'none';
+			}
+			if(_t) {
+				document.querySelector('#' + _t).style.display = 'block';
+			}
+		}
+		function bindA () {
+			var as = document.querySelectorAll('a'),
+					aLength = as.length;
+			for(var i = 0; i < aLength; i ++) {
+				var a = as[i];
+				a.addEventListener('click',function  (a) {
+					return function (argument) {
+						openMessage.apply(a);
+					}
+				}(a),false);
+			}
+		}
+
+		var loading, main, prize, game;
+		function pageInit() {
+			loading = document.querySelector('.loading');
+			main = document.querySelector('.main');
+			prize = document.querySelector('.prizeDetail');
+			game = document.querySelector('.game');
+
+			onLoaded();
+
+			document.querySelector('#btnStartGame').addEventListener('click', function (evt) {
+				startGame();
+			}, false);
+		}
+
+		function onLoaded() {
+			main.style.display = 'block';
+			loading.style.display = 'none';
+		}
+
+		function startGame() {
+			main.style.display = 'none';
+			game.style.display = 'block';
+			runGame();
+		}
+
+		function gameOver (score) {
+
+		}
+
+		function runGame() {
+			cc.game.onStart = function(){
+				var size = cc.winSize;
+				cc.view.adjustViewPort(true);
+				cc.view.setDesignResolutionSize(640, 940, cc.ResolutionPolicy.SHOW_ALL);
+				cc.view.resizeWithBrowserSize(true);
+				//load resources
+				cc.LoaderScene.preload(g_resources, function () {
+					//cc.director.runScene(new Helloproject.jsonWorldScene());
+					cc.director.runScene(new PlayScene());
+				}, this);
+			};
+			cc.game.onStop = function () {
+				gameOver(cc.game.score);
+			};
+			cc.game.run();
+		}
+
+		window.addEventListener('load', function () {
+			bindA();
+			pageInit();
+		}, false);
+	})();
+</script>
+</body>
+</html>
